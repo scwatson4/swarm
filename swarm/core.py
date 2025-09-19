@@ -26,8 +26,20 @@ __CTX_VARS_NAME__ = "context_variables"
 
 class Swarm:
     def __init__(self, client=None):
+        import os
+        # Support Google Colab secret keys for API key and endpoint
+        api_key = os.environ.get("AZURE_OPENAI_API_KEY")
+        endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+        try:
+            from google.colab import userdata
+            if not api_key:
+                api_key = userdata.get('AZURE_OPENAI_API_KEY')
+            if not endpoint:
+                endpoint = userdata.get('AZURE_OPENAI_ENDPOINT')
+        except ImportError:
+            pass
         if not client:
-            client = create_azure_openai_client()
+            client = create_azure_openai_client(api_key=api_key, endpoint=endpoint)
         self.client = client
 
     def get_chat_completion(
@@ -58,8 +70,15 @@ class Swarm:
 
         # Always use deployment name from env for Azure
         deployment_name = os.environ.get("AZURE_OPENAI_DEPLOYMENT")
+        # Support Google Colab secret key
         if not deployment_name:
-            raise ValueError("AZURE_OPENAI_DEPLOYMENT environment variable must be set for Azure OpenAI.")
+            try:
+                from google.colab import userdata
+                deployment_name = userdata.get('AZURE_OPENAI_DEPLOYMENT')
+            except ImportError:
+                pass
+        if not deployment_name:
+            raise ValueError("AZURE_OPENAI_DEPLOYMENT environment variable must be set for Azure OpenAI (env or Colab secret).")
 
         create_params = {
             "model": deployment_name,
