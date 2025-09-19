@@ -3,8 +3,8 @@ import json
 from swarm.client import create_azure_openai_client
 
 client = create_azure_openai_client()
-GPT_MODEL = 'gpt-4'
-EMBEDDING_MODEL = "text-embedding-3-large"
+GPT_MODEL = os.environ.get("AZURE_OPENAI_DEPLOYMENT")
+EMBEDDING_MODEL = os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT")
 
 article_list = os.listdir('data')
 

@@ -1,6 +1,6 @@
 def get_completion(client,
     messages: list[dict[str, str]],
-    model: str = "gpt-4-0125-preview",
+    model: str = os.environ.get("AZURE_OPENAI_DEPLOYMENT"),
     max_tokens=2000,
     temperature=0.7,
     tools=None, 

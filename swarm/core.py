@@ -1,4 +1,5 @@
 # Standard library imports
+import os
 import copy
 import json
 from collections import defaultdict
@@ -55,8 +56,13 @@ class Swarm:
             if __CTX_VARS_NAME__ in params["required"]:
                 params["required"].remove(__CTX_VARS_NAME__)
 
+        # Always use deployment name from env for Azure
+        deployment_name = os.environ.get("AZURE_OPENAI_DEPLOYMENT")
+        if not deployment_name:
+            raise ValueError("AZURE_OPENAI_DEPLOYMENT environment variable must be set for Azure OpenAI.")
+
         create_params = {
-            "model": model_override or agent.model,
+            "model": deployment_name,
             "messages": messages,
             "tools": tools or None,
             "tool_choice": agent.tool_choice,
@@ -271,7 +277,6 @@ class Swarm:
             history.append(
                 json.loads(message.model_dump_json())
             )  # to avoid OpenAI types (?)
-
             if not message.tool_calls or not execute_tools:
                 debug_print(debug, "Ending turn.")
                 break
