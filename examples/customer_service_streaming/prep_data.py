@@ -1,8 +1,8 @@
 import os
 import json
-from openai import OpenAI
+from swarm.client import create_azure_openai_client
 
-client = OpenAI()
+client = create_azure_openai_client()
 GPT_MODEL = 'gpt-4'
 EMBEDDING_MODEL = "text-embedding-3-large"
 

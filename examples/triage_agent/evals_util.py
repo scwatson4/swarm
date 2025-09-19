@@ -1,9 +1,9 @@
-from openai import OpenAI
+from swarm.client import create_azure_openai_client
 import instructor
 from pydantic import BaseModel
 from typing import Optional
 
-__client = instructor.from_openai(OpenAI())
+__client = instructor.from_openai(create_azure_openai_client())
 
 
 class BoolEvalResult(BaseModel):

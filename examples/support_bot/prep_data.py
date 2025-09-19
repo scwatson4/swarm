@@ -3,10 +3,10 @@ import os
 
 import pandas as pd
 import qdrant_client
-from openai import OpenAI
+from swarm.client import create_azure_openai_client
 from qdrant_client.http import models as rest
 
-client = OpenAI()
+client = create_azure_openai_client()
 GPT_MODEL = "gpt-4o"
 EMBEDDING_MODEL = "text-embedding-3-large"
 

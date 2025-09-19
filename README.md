@@ -21,6 +21,27 @@ or
 pip install git+https://github.com/openai/swarm.git
 ```
 
+
+## Azure OpenAI Setup
+
+To use Swarm with Azure OpenAI, set the following environment variables in a `.env` file or your shell:
+
+```
+AZURE_OPENAI_API_KEY=your-azure-openai-api-key
+AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
+AZURE_OPENAI_API_VERSION=2024-02-01
+AZURE_OPENAI_DEPLOYMENT=your-deployment-name
+```
+
+You can use a package like `python-dotenv` to load these automatically:
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
+
+All OpenAI calls in Swarm will use Azure OpenAI via these settings.
+
 ## Usage
 
 ```python

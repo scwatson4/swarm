@@ -1,13 +1,13 @@
 import re
 
 import qdrant_client
-from openai import OpenAI
+from swarm.client import create_azure_openai_client
 
 from swarm import Agent
 from swarm.repl import run_demo_loop
 
 # Initialize connections
-client = OpenAI()
+client = create_azure_openai_client()
 qdrant = qdrant_client.QdrantClient(host="localhost")
 
 # Set embedding model

@@ -1,5 +1,5 @@
 import json
-from openai import OpenAI
+from swarm.client import create_azure_openai_client
 from src.tasks.task import Task, EvaluationTask
 from src.swarm.engines.assistants_engine import AssistantsEngine
 from src.swarm.engines.local_engine import LocalEngine
@@ -19,7 +19,7 @@ class Swarm:
         """
         Processes all tasks in the order they are listed in self.tasks.
         """
-        client = OpenAI()
+    client = create_azure_openai_client()
         # Initialize swarm first
         if self.engine_name == 'assistants':
             print(f"{Colors.GREY}Selected engine: Assistants{Colors.ENDC}")
