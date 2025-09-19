@@ -26,11 +26,8 @@ __CTX_VARS_NAME__ = "context_variables"
 
 class Swarm:
     def __init__(self, client=None):
-        import os
-        api_key = os.environ.get("AZURE_OPENAI_API_KEY")
-        endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
         if not client:
-            client = create_azure_openai_client(api_key=api_key, endpoint=endpoint)
+            client = create_azure_openai_client()
         self.client = client
 
     def get_chat_completion(
